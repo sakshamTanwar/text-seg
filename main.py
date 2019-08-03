@@ -8,18 +8,20 @@ import pythonSegmentation
 
 def fixSkew(img_fl, save_fl):
     angle = findBestAngle.findAngleMinArea(img_fl)
-    newImg = findBestAngle.rotateImage(img_fl, angle)
+    img = cv2.imread(img_fl)
+    newImg = findBestAngle.rotateImage(img, angle)
     cv2.imwrite(save_fl, newImg)
 
 def fixBorder(img_fl, line_fl, save_fl):
-    borderRemoval.removeAnsSave(img_fl, line_fl, save_fl)
+    borderRemoval.removeAndSave(img_fl, line_fl, save_fl)
 
 def fixLineMerge(line_fl, out_fl):
-    newLines, _ = lineMerge.mergeLines(line_fl)
+    lines = lineMerge.getLines(line_fl)
+    newLines, _ = lineMerge.mergeLines(lines)
     
     out_fl = open(out_fl, "w+")
     for line in newLines:
-        new_fl.write("{a}\t{b}\t{c}\t{d}\n".format(a = line[0], b = line[1], c = line[2], d = line[3]))
+        out_fl.write("{a}\t{b}\t{c}\t{d}\n".format(a = line[0], b = line[1], c = line[2], d = line[3]))
 
 
 
@@ -51,6 +53,7 @@ if __name__ == "__main__":
     if "-l" in sys.argv:
         actMerge = True
 
+
     tempFile = sys.argv[-2]
 
     if actSkew:
@@ -64,9 +67,12 @@ if __name__ == "__main__":
     if actMerge:
         pythonSegmentation.runSegmentation(tempFile, "temp_seg.txt", 2)
         fixLineMerge("temp_seg.txt", "final_seg.txt")
+        cv2.imwrite("final.png", cv2.imread(tempFile))
         exit()
 
     pythonSegmentation.runSegmentation(tempFile, "final_seg.txt", 2)
+    cv2.imwrite("final.png", cv2.imread(tempFile))
+
 
 
     

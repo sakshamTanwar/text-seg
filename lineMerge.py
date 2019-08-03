@@ -34,7 +34,6 @@ def dist(line1, line2):
 
 def mergeLines(lines):
     avg_ht = getAvgHeight(lines)
-    print(avg_ht)
     threshold = 0.6
     threshold_dist = 0.09
     newLines = []
