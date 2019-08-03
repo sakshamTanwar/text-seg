@@ -1,4 +1,4 @@
-#Usage
+# Usage
 ```
 python main.py [OPTIONS] image_file line_segmentation_file
 Options:-
