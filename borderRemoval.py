@@ -68,7 +68,7 @@ def removeLines(img_fl, lines, save_path):
     cv2.imwrite(save_path, crop_img)
     return leftX, rightX
 
-def removeAndSave(img_fl, ln_fl, save_path, lang):
+def removeAndSave(img_fl, ln_fl, save_path):
     lines = detectLines(img_fl, ln_fl)
     if len(lines) == 0:
         print("No lines for border found")
@@ -92,7 +92,7 @@ def runForAll(lang):
 
                 line_fl = os.path.join(root, "..", "tesserocrSegmentation", removeExt(f), f + "lines.txt")
                 save_path = os.path.join(directory, f + "border.png")
-                removeAndSave(os.path.join(root, f), line_fl, save_path, lang)
+                removeAndSave(os.path.join(root, f), line_fl, save_path)
 
 
 
