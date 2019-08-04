@@ -27,17 +27,13 @@ def fixLineMerge(line_fl, out_fl):
 
 if __name__ == "__main__":
     sz = len(sys.argv)
-    if sz < 3:
-        print("Usage: python main.py [OPTIONS] image_file line_file")
+    if sz < 2:
+        print("Usage: python main.py [OPTIONS] image_file")
         print("Options:-\n-b include border removal\n-s include skew correction\n-l include line merge")
         exit()
 
-    if not os.path.isfile(sys.argv[-2]):
-        print("Image file does not exists")
-        exit()
-
     if not os.path.isfile(sys.argv[-1]):
-        print("Line Segmentation file does not exist")
+        print("Image file does not exists")
         exit()
 
     actSkew = False
@@ -54,14 +50,16 @@ if __name__ == "__main__":
         actMerge = True
 
 
-    tempFile = sys.argv[-2]
+    tempFile = sys.argv[-1]
+    segFile = "init_seg.txt"
+    pythonSegmentation.runSegmentation(tempFile, segFile, 2)
 
     if actSkew:
-        fixSkew(sys.argv[-2], "temp_skew.png")
+        fixSkew(sys.argv[-1], "temp_skew.png")
         tempFile = "temp_skew.png"
 
     if actBord:
-        fixBorder(tempFile, sys.argv[-1], "temp.png")
+        fixBorder(tempFile, segFile, "temp.png")
         tempFile = "temp.png"
 
     if actMerge:
