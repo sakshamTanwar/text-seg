@@ -12,9 +12,9 @@ python main.py -b -s -l sample.jpg
 
 Install the required libraries using `requirements.txt`
 
-Input:-
+Input:-<br/>
 Image File
 
-Output:-
-Final Image File :- final.png
+Output:-<br/>
+Final Image File :- final.png <br/>
 Final Segmentation File :- final_seg.txt
